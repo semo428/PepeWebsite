@@ -298,7 +298,7 @@ button { font: inherit; color: inherit; }
 
   body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   .tabbar {
-    display: grid; grid-template-columns: repeat(4, 1fr);
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
     background: rgba(20,19,18,.97); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     border-top: 1px solid rgba(255,255,255,.08);
@@ -437,6 +437,52 @@ button { font: inherit; color: inherit; }
 .chat__form button svg { width: 20px; height: 20px; }
 .chat__legal { margin: 0; padding: 0 16px calc(8px + env(safe-area-inset-bottom)); font-size: 11px; color: var(--grau); text-align: center; background: var(--papier); }
 
+/* =====================================================================
+   AI-SCHALTER: ohne "ai-an" ist es die normale Website
+   ===================================================================== */
+html:not(.ai-an) .ai-only { display: none !important; }
+
+.site-header .wrap { gap: 12px; }
+.ai-switch {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid rgba(244,241,234,.22); background: rgba(255,255,255,.04);
+  color: var(--creme); border-radius: 999px; padding: 5px 6px 5px 12px; cursor: pointer;
+  font-family: var(--kopf); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+  transition: border-color .2s, background .2s, box-shadow .3s;
+}
+.ai-switch:hover { border-color: rgba(244,241,234,.5); }
+.ai-switch__track { position: relative; width: 38px; height: 22px; border-radius: 999px; background: #4a4640; transition: background .25s; }
+.ai-switch__knob { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--creme); transition: transform .25s cubic-bezier(.3,1.4,.6,1); box-shadow: 0 1px 3px rgba(0,0,0,.4); }
+.ai-an .ai-switch { border-color: rgba(200,40,58,.7); background: rgba(200,40,58,.12); box-shadow: 0 0 0 3px rgba(200,40,58,.15); }
+.ai-an .ai-switch__track { background: linear-gradient(90deg, var(--gruen), var(--rot)); }
+.ai-an .ai-switch__knob { transform: translateX(16px); }
+@media (max-width: 760px) {
+  .ai-switch { font-size: 12px; padding: 4px 5px 4px 10px; gap: 8px; }
+  .ai-switch__track { width: 34px; height: 20px; }
+  .ai-switch__knob { width: 14px; height: 14px; }
+  .ai-an .ai-switch__knob { transform: translateX(14px); }
+}
+
+/* kurze Einblendung beim Umschalten */
+.ai-toast {
+  position: fixed; left: 50%; top: 72px; z-index: 120; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px;
+  background: var(--schwarz); color: var(--creme); border: 1px solid rgba(244,241,234,.15);
+  border-radius: 14px; padding: 10px 18px; box-shadow: 0 16px 40px -12px rgba(0,0,0,.5);
+  width: max-content; max-width: calc(100vw - 32px); animation: toastRein .3s ease-out;
+}
+.ai-toast[hidden] { display: none; }
+.ai-toast strong { font-family: var(--kopf); font-weight: 500; letter-spacing: .05em; font-size: 16px; }
+.ai-toast span { font-size: 13px; opacity: .75; }
+@keyframes toastRein { from { opacity: 0; transform: translate(-50%, -8px); } }
+@media (max-width: 760px) { .ai-toast { top: 64px; } }
+
+/* "Wow"-Moment beim Einschalten: AI-Elemente ploppen auf */
+.ai-wow .ai-only { animation: aiPop .6s cubic-bezier(.3,1.5,.6,1) both; }
+.ai-wow .dish__ask { animation-delay: .15s; }
+@keyframes aiPop { from { opacity: 0; transform: scale(.6); } }
+
 @media (prefers-reduced-motion: reduce) {
-  .chat, .msg, .replies, .chat-teaser, .dish.is-hit, .status__dot { animation: none !important; }
+  .chat, .msg, .replies, .chat-teaser, .dish.is-hit, .status__dot, .ai-toast, .ai-wow .ai-only { animation: none !important; }
 }

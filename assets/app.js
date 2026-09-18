@@ -83,10 +83,11 @@
       '<a class="tabbar__item' + (AUF_KARTE ? ' is-active' : '') + '" href="speisekarte.html">' + ICON.karte + '<span>Karte</span></a>' +
       '<a class="tabbar__item" href="tel:' + R.telefonLink + '">' + ICON.tel + '<span>Anrufen</span></a>' +
       '<a class="tabbar__item" href="' + ROUTE + '" target="_blank" rel="noopener">' + ICON.route + '<span>Route</span></a>' +
-      '<button class="tabbar__item tabbar__item--chat" type="button" data-chat-open>' + ICON.chat + '<span>Fragen</span></button>' +
+      '<button class="tabbar__item tabbar__item--chat ai-only" type="button" data-chat-open>' + ICON.chat + '<span>Fragen</span></button>' +
     '</nav>' +
-    '<button class="chat-fab" type="button" data-chat-open>' + ICON.chat + '<span>Fragen zur Karte?</span></button>' +
-    '<div class="chat-teaser" hidden><button type="button" data-chat-open>Allergie oder keine Idee? <strong>Frag Pepino!</strong></button><button type="button" class="chat-teaser__x" aria-label="Hinweis schließen">×</button></div>'
+    '<button class="chat-fab ai-only" type="button" data-chat-open>' + ICON.chat + '<span>Fragen zur Karte?</span></button>' +
+    '<div class="ai-toast" role="status" aria-live="polite" hidden></div>' +
+    '<div class="chat-teaser ai-only" hidden><button type="button" data-chat-open>Allergie oder keine Idee? <strong>Frag Pepino!</strong></button><button type="button" class="chat-teaser__x" aria-label="Hinweis schließen">×</button></div>'
   );
 
   /* ---------- 3. Chat-Oberfläche ---------- */
@@ -113,7 +114,51 @@
   var gestartet = false;
   var zustand = {};
 
+  /* ---------- AI-Schalter ("Mit AI") ---------- */
+  var HTML = document.documentElement;
+  var aiAn = function () { return HTML.classList.contains("ai-an"); };
+  var kopf = document.querySelector(".site-header .wrap");
+  if (kopf) {
+    kopf.insertAdjacentHTML("beforeend",
+      '<button class="ai-switch" type="button" role="switch" aria-checked="false" aria-label="AI-Funktionen einschalten">' +
+        '<span class="ai-switch__label">✨ Mit AI</span><span class="ai-switch__track"><span class="ai-switch__knob"></span></span>' +
+      "</button>");
+    // Schalter vor die Navigation setzen (links von "Start / Speisekarte …")
+    var nav = kopf.querySelector(".nav");
+    if (nav) kopf.insertBefore(kopf.lastElementChild, nav);
+  }
+  var schalter = document.querySelector(".ai-switch");
+  var toast = document.querySelector(".ai-toast");
+  var toastTimer;
+  function zeigeToast(html) {
+    toast.innerHTML = html;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.hidden = true; }, 3200);
+  }
+  function setzeAI(an, mitToast) {
+    HTML.classList.toggle("ai-an", an);
+    if (schalter) schalter.setAttribute("aria-checked", an);
+    try { localStorage.setItem("dapepe-ai", an ? "1" : "0"); } catch (e) {}
+    if (!an) { schliesseChat(); teaser.hidden = true; }
+    if (mitToast) {
+      zeigeToast(an
+        ? "<strong>✨ AI-Funktionen aktiv</strong><span>Digitaler Kellner Pepino, Allergie-Check, Pizza-Finder & mehr</span>"
+        : "<strong>Standard-Website</strong><span>AI-Funktionen ausgeschaltet</span>");
+      if (an) {
+        HTML.classList.add("ai-wow");
+        setTimeout(function () { HTML.classList.remove("ai-wow"); }, 1600);
+        setTimeout(function () { if (chat.hidden && aiAn()) teaser.hidden = false; }, 1800);
+      }
+    }
+  }
+  if (schalter) {
+    schalter.setAttribute("aria-checked", aiAn());
+    schalter.addEventListener("click", function () { setzeAI(!aiAn(), true); });
+  }
+
   function oeffneChat(frage) {
+    if (!aiAn()) return;
     chat.hidden = false;
     document.documentElement.classList.add("chat-offen");
     teaserWeg();
@@ -534,7 +579,7 @@
   teaser.querySelector(".chat-teaser__x").addEventListener("click", teaserWeg);
   var schonGesehen = false;
   try { schonGesehen = sessionStorage.getItem("pepino-teaser") === "1"; } catch (e) {}
-  if (!schonGesehen) setTimeout(function () { if (chat.hidden) teaser.hidden = false; }, 4000);
+  if (!schonGesehen) setTimeout(function () { if (chat.hidden && aiAn()) teaser.hidden = false; }, 4000);
 
   window.PepinoChat = { oeffnen: oeffneChat };
 })();

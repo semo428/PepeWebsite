@@ -11,6 +11,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23141312'/><text x='50' y='70' font-size='62' text-anchor='middle' fill='%23f4f1ea' font-family='cursive'>P</text><rect x='18' y='80' width='21' height='6' fill='%231f7a45'/><rect x='39' y='80' width='22' height='6' fill='%23f4f1ea'/><rect x='61' y='80' width='21' height='6' fill='%23c8283a'/></svg>">
   <link rel="preload" href="assets/fonts/yellowtail-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/styles.css">
+  <script>try { if (localStorage.getItem("dapepe-ai") === "1") document.documentElement.classList.add("ai-an"); } catch (e) {}</script>
 </head>
 <body>
 
@@ -114,7 +115,7 @@
               ? '<span class="dish__price">' + euro(g.preis) + '</span>'
               : '<span class="dish__price dish__price--na">auf Anfrage</span>') +
             '<p class="dish__desc">' + esc(g.desc) + '</p>' +
-            '<button class="dish__ask" type="button" data-frag-gericht="' + esc(g.nr) + '" aria-label="Pepino zu ' + esc(g.name) + ' fragen" title="Pepino fragen">💬</button>' +
+            '<button class="dish__ask ai-only" type="button" data-frag-gericht="' + esc(g.nr) + '" aria-label="Pepino zu ' + esc(g.name) + ' fragen" title="Pepino fragen">💬</button>' +
             (tags.length ? '<div class="dish__tags">' + tags.map(function (t) { return '<span class="tag tag--' + t + '">' + TAGS[t] + '</span>'; }).join("") + '</div>' : '') +
             '</li>';
         }).join("") + '</ul></section>';
