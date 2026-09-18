@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>da Pepe – Pizzeria Ristorante in Sigmaringen</title>
+  <meta name="description" content="Pizzeria Ristorante da Pepe in Sigmaringen: Steinofen-Pizza, Pasta, Fleisch- und Fischgerichte. Speisekarte, Öffnungszeiten und Kontakt.">
+  <meta name="theme-color" content="#141312">
+  <!-- DEMO: vor dem echten Start entfernen -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23141312'/><text x='50' y='70' font-size='62' text-anchor='middle' fill='%23f4f1ea' font-family='cursive'>P</text><rect x='18' y='80' width='21' height='6' fill='%231f7a45'/><rect x='39' y='80' width='22' height='6' fill='%23f4f1ea'/><rect x='61' y='80' width='21' height='6' fill='%23c8283a'/></svg>">
+  <link rel="preload" href="assets/fonts/yellowtail-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Pizzeria Ristorante da Pepe",
+    "servesCuisine": "Italienisch",
+    "telephone": "+4975717494040",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "In der Vorstadt 8",
+      "postalCode": "72488",
+      "addressLocality": "Sigmaringen",
+      "addressCountry": "DE"
+    },
+    "hasMenu": "speisekarte.html"
+  }
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="da Pepe – Startseite">
+      <span class="logo__over">Pizzeria · Ristorante</span>
+      <span class="logo__name">da Pepe</span>
+      <span class="logo__swoosh" aria-hidden="true"></span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="index.html" aria-current="page">Start</a>
+      <a href="speisekarte.html">Speisekarte</a>
+      <a href="#kontakt">Kontakt</a>
+      <a class="nav__tel" href="tel:+4975717494040">Anrufen</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="logo" role="img" aria-label="Pizzeria Ristorante da Pepe">
+        <span class="logo__over">Pizzeria · Ristorante</span>
+        <span class="logo__name">da Pepe</span>
+        <span class="logo__swoosh" aria-hidden="true"></span>
+      </span>
+      <p><span data-status class="status"></span></p>
+      <p class="hero__claim">Italienische Küche in Sigmaringen</p>
+      <p class="hero__sub">Pizza aus dem Steinofen, Pasta, Fleisch- und Fischgerichte – mitten in der Sigmaringer Vorstadt.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="speisekarte.html">Zur Speisekarte</a>
+        <a class="btn btn--ghost" href="tel:+4975717494040">07571 7494040</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <h2 class="brush">Unsere Karte</h2>
+        <p>Über 100 Gerichte – von der klassischen Margherita bis zum Rumpsteak vom Rost.</p>
+      </div>
+      <div class="cards" id="kategorie-karten"><!-- per JS aus speisekarte.js --></div>
+      <div class="btn-row" style="margin-top:32px">
+        <a class="btn btn--dark" href="speisekarte.html">Ganze Speisekarte ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pepino-teaser">
+    <div class="wrap">
+      <div class="pepino-card">
+        <div class="pepino-card__avatar" aria-hidden="true">P</div>
+        <div>
+          <h2>Fragen zur Karte? <span>Frag Pepino!</span></h2>
+          <p>Unser digitaler Kellner hilft bei Allergien, findet Ihre perfekte Pizza und stellt ein Menü für zwei zusammen.</p>
+          <div class="pepino-card__chips">
+            <button type="button" data-chat-aktion="finder">🍕 Pizza-Finder</button>
+            <button type="button" data-chat-aktion="krebs">🦐 Allergie-Check</button>
+            <button type="button" data-chat-aktion="surprise">🎲 Überrasch mich</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark" id="kontakt">
+    <div class="wrap">
+      <div class="section__head">
+        <h2 class="brush">Besuchen Sie uns</h2>
+        <p>Wir freuen uns auf Ihren Besuch. Tischreservierungen gerne telefonisch.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-box">
+          <h3>Öffnungszeiten</h3>
+          <p><span data-status class="status"></span></p>
+          <table class="hours" data-oeffnungszeiten></table>
+          <!-- TODO: Öffnungszeiten vom Restaurant bestätigen lassen -->
+        </div>
+        <div class="info-box">
+          <h3>Adresse</h3>
+          <p>Pizzeria Ristorante da Pepe<br>In der Vorstadt 8<br>72488 Sigmaringen</p>
+          <p style="margin-top:16px"><a href="https://www.google.com/maps/search/?api=1&query=Pizzeria+Ristorante+da+Pepe+In+der+Vorstadt+8+Sigmaringen" target="_blank" rel="noopener">Route planen ↗</a></p>
+        </div>
+        <div class="info-box">
+          <h3>Reservierung</h3>
+          <p><a href="tel:+4975717494040" style="font-family:var(--kopf);font-size:24px;text-decoration:none">07571 7494040</a></p>
+          <p class="note">Rufen Sie uns an – wir reservieren Ihnen gerne einen Tisch.</p>
+          <!-- TODO: klären, ob Abholung/Lieferung angeboten wird -->
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="logo">
+      <span class="logo__over">Pizzeria · Ristorante</span>
+      <span class="logo__name">da Pepe</span>
+      <span class="logo__swoosh" aria-hidden="true"></span>
+    </span>
+    <nav aria-label="Rechtliches">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/speisekarte.js"></script>
+<script src="assets/app.js" defer></script>
+<script>
+  (function () {
+    var data = window.SPEISEKARTE;
+    var euro = function (n) { return n.toFixed(2).replace(".", ",") + " €"; };
+
+    // Kategorie-Karten mit "ab"-Preis
+    var hervorheben = ["pizza", "spaghetti", "tagliatelle", "alforno", "rind", "salate"];
+    document.getElementById("kategorie-karten").innerHTML = hervorheben.map(function (id) {
+      var k = data.kategorien.find(function (c) { return c.id === id; });
+      var preise = k.gerichte.map(function (g) { return g.preis; }).filter(function (p) { return p != null; });
+      return '<a class="card" href="speisekarte.html#' + k.id + '">' +
+        '<h3 class="card__title">' + k.titel + '</h3>' +
+        '<div class="card__meta">' + (k.untertitel && k.untertitel.length < 30 ? k.untertitel : k.gerichte.length + " Gerichte") + '</div>' +
+        '<div class="card__price">ab ' + euro(Math.min.apply(null, preise)) + '</div></a>';
+    }).join("");
+  })();
+</script>
+</body>
+</html>

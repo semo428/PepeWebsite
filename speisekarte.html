@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Speisekarte – da Pepe Sigmaringen</title>
+  <meta name="description" content="Die komplette Speisekarte der Pizzeria Ristorante da Pepe in Sigmaringen: Steinofen-Pizza, Spaghetti, Tortellini, Penne, Tagliatelle, Gnocchi, Al Forno, Fleisch, Fisch und Salate.">
+  <meta name="theme-color" content="#141312">
+  <!-- DEMO: vor dem echten Start entfernen -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23141312'/><text x='50' y='70' font-size='62' text-anchor='middle' fill='%23f4f1ea' font-family='cursive'>P</text><rect x='18' y='80' width='21' height='6' fill='%231f7a45'/><rect x='39' y='80' width='22' height='6' fill='%23f4f1ea'/><rect x='61' y='80' width='21' height='6' fill='%23c8283a'/></svg>">
+  <link rel="preload" href="assets/fonts/yellowtail-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="da Pepe – Startseite">
+      <span class="logo__over">Pizzeria · Ristorante</span>
+      <span class="logo__name">da Pepe</span>
+      <span class="logo__swoosh" aria-hidden="true"></span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="index.html">Start</a>
+      <a href="speisekarte.html" aria-current="page">Speisekarte</a>
+      <a href="index.html#kontakt">Kontakt</a>
+      <a class="nav__tel" href="tel:+4975717494040">Anrufen</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="menu-hero">
+    <h1>Speisekarte</h1>
+    <p>Buon appetito</p>
+  </section>
+
+  <div class="toolbar">
+    <nav class="cat-nav" id="cat-nav" aria-label="Kategorien"></nav>
+  </div>
+  <div class="filter-bar">
+    <div class="filters">
+      <input class="search" id="suche" type="search" placeholder="Gericht oder Zutat suchen …" aria-label="Speisekarte durchsuchen" autocomplete="off">
+      <button class="chip" type="button" data-filter="veg" aria-pressed="false">🌿 Vegetarisch</button>
+      <button class="chip" type="button" data-filter="fisch" aria-pressed="false">🐟 Fisch</button>
+      <button class="chip" type="button" data-filter="scharf" aria-pressed="false">🌶 Scharf</button>
+    </div>
+  </div>
+
+  <div class="wrap menu">
+    <div id="karte"></div>
+    <p class="empty" id="leer" hidden>Keine passenden Gerichte gefunden.</p>
+
+    <p class="legal-hint">
+      Alle Preise in Euro inkl. MwSt. Informationen zu Allergenen und Zusatzstoffen erhalten Sie auf Anfrage bei unserem Personal.
+      Die Kennzeichnungen „vegetarisch“, „Fisch“ und „scharf“ dienen der Orientierung – bitte sprechen Sie uns bei Unverträglichkeiten an.
+    </p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="logo">
+      <span class="logo__over">Pizzeria · Ristorante</span>
+      <span class="logo__name">da Pepe</span>
+      <span class="logo__swoosh" aria-hidden="true"></span>
+    </span>
+    <nav aria-label="Rechtliches">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/speisekarte.js"></script>
+<script src="assets/app.js" defer></script>
+<script>
+  (function () {
+    var data = window.SPEISEKARTE;
+    var TAGS = { veg: "vegetarisch", fisch: "Fisch", scharf: "scharf" };
+    var karte = document.getElementById("karte");
+    var catNav = document.getElementById("cat-nav");
+    var suche = document.getElementById("suche");
+    var leer = document.getElementById("leer");
+    var aktiveFilter = [];
+
+    var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+    var euro = function (n) { return n.toFixed(2).replace(".", ","); };
+
+    // Prüfmodus: speisekarte.html?pruefen markiert unsichere Einträge
+    if (/[?&]pruefen/.test(location.search)) {
+      document.body.classList.add("pruefmodus");
+      var anzahl = data.kategorien.reduce(function (s, k) { return s + k.gerichte.filter(function (g) { return g.pruefen; }).length; }, 0);
+      document.body.insertAdjacentHTML("afterbegin", '<div class="pruef-banner"><strong>Prüfmodus:</strong> ' + anzahl + ' gelb markierte Einträge bitte mit dem Restaurant abgleichen.</div>');
+    }
+
+    // Rendern
+    catNav.innerHTML = data.kategorien.map(function (k) {
+      return '<a href="#' + k.id + '" data-cat="' + k.id + '">' + esc(k.titel) + '</a>';
+    }).join("");
+
+    karte.innerHTML = data.kategorien.map(function (k) {
+      return '<section class="menu-cat" id="' + k.id + '">' +
+        '<h2 class="brush">' + esc(k.titel) + '</h2>' +
+        (k.untertitel ? '<p class="menu-cat__sub">' + esc(k.untertitel) + '</p>' : '') +
+        '<ul class="dishes">' + k.gerichte.map(function (g) {
+          var tags = (g.tags || []);
+          var suchtext = (g.nr + " " + g.name + " " + g.desc + " " + k.titel + " " + tags.map(function (t) { return TAGS[t]; }).join(" ")).toLowerCase();
+          return '<li class="dish' + (g.pruefen ? ' is-pruefen' : '') + '" id="g-' + esc(g.nr) + '" data-tags="' + tags.join(" ") + '" data-suche="' + esc(suchtext) + '">' +
+            '<span class="dish__nr">' + esc(g.nr) + '</span>' +
+            '<h3 class="dish__name">' + esc(g.name) + '</h3>' +
+            (g.preis != null
+              ? '<span class="dish__price">' + euro(g.preis) + '</span>'
+              : '<span class="dish__price dish__price--na">auf Anfrage</span>') +
+            '<p class="dish__desc">' + esc(g.desc) + '</p>' +
+            '<button class="dish__ask" type="button" data-frag-gericht="' + esc(g.nr) + '" aria-label="Pepino zu ' + esc(g.name) + ' fragen" title="Pepino fragen">💬</button>' +
+            (tags.length ? '<div class="dish__tags">' + tags.map(function (t) { return '<span class="tag tag--' + t + '">' + TAGS[t] + '</span>'; }).join("") + '</div>' : '') +
+            '</li>';
+        }).join("") + '</ul></section>';
+    }).join("");
+
+    // Filtern & Suchen
+    function anwenden() {
+      var q = suche.value.trim().toLowerCase();
+      var gesamt = 0;
+      karte.querySelectorAll(".menu-cat").forEach(function (sec) {
+        var sichtbar = 0;
+        sec.querySelectorAll(".dish").forEach(function (li) {
+          var tags = li.dataset.tags.split(" ");
+          var ok = (!q || li.dataset.suche.indexOf(q) !== -1) &&
+                   aktiveFilter.every(function (f) { return tags.indexOf(f) !== -1; });
+          li.hidden = !ok;
+          if (ok) sichtbar++;
+        });
+        sec.hidden = sichtbar === 0;
+        var link = catNav.querySelector('[data-cat="' + sec.id + '"]');
+        if (link) link.hidden = sichtbar === 0;
+        gesamt += sichtbar;
+      });
+      leer.hidden = gesamt > 0;
+    }
+    suche.addEventListener("input", anwenden);
+    var chips = document.querySelectorAll(".chip");
+    function setzeFilter(f, an) {
+      var btn = document.querySelector('.chip[data-filter="' + f + '"]');
+      if (btn) btn.setAttribute("aria-pressed", an);
+      aktiveFilter = aktiveFilter.filter(function (x) { return x !== f; });
+      if (an) aktiveFilter.push(f);
+    }
+    chips.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setzeFilter(btn.dataset.filter, btn.getAttribute("aria-pressed") !== "true");
+        anwenden();
+      });
+    });
+    // vom Chat genutzt: Filter zurücksetzen, damit ein verlinktes Gericht sichtbar ist
+    window.dapepeFilterReset = function () {
+      suche.value = "";
+      chips.forEach(function (b) { setzeFilter(b.dataset.filter, false); });
+      anwenden();
+    };
+    // speisekarte.html?filter=veg
+    var startFilter = (location.search.match(/[?&]filter=(\w+)/) || [])[1];
+    if (startFilter) { setzeFilter(startFilter, true); anwenden(); }
+    // Sprung zu #g-xx nach dem Rendern (Inhalte entstehen erst per JS)
+    if (location.hash) {
+      var ziel = document.getElementById(location.hash.slice(1));
+      if (ziel) requestAnimationFrame(function () { ziel.scrollIntoView(); ziel.classList.add("is-hit"); });
+    }
+    window.addEventListener("hashchange", function () {
+      var z = document.getElementById(location.hash.slice(1));
+      if (!z) return;
+      document.querySelectorAll(".is-hit").forEach(function (x) { x.classList.remove("is-hit"); });
+      void z.offsetWidth;
+      z.classList.add("is-hit");
+    });
+
+    // Aktive Kategorie in der Leiste hervorheben
+    var links = catNav.querySelectorAll("a");
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (a) {
+          var aktiv = a.dataset.cat === e.target.id;
+          a.classList.toggle("is-active", aktiv);
+          if (aktiv) catNav.scrollTo({ left: a.offsetLeft - catNav.clientWidth / 2 + a.offsetWidth / 2, behavior: "smooth" });
+        });
+      });
+    }, { rootMargin: "-130px 0px -60% 0px" });
+    karte.querySelectorAll(".menu-cat").forEach(function (s) { obs.observe(s); });
+  })();
+</script>
+</body>
+</html>

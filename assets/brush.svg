@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 60" preserveAspectRatio="none">
+  <!-- schwarzer Pinselstrich, angelehnt an die Kategorie-Balken der Tafel -->
+  <path fill="#141312" d="M6 18 L40 12 L120 9 L260 7 L420 8 L560 10 L592 14 L584 22 L598 28 L586 34 L596 42 L570 48 L430 52 L260 53 L110 51 L30 48 L2 44 L14 38 L0 31 L12 25 Z"/>
+  <path fill="#141312" opacity=".55" d="M0 22 L24 20 L10 26 Z M4 46 L30 44 L8 50 Z M590 20 L600 19 L592 24 Z"/>
+  <!-- Trikolore-Striche rechts -->
+  <g transform="skewX(-30)" opacity=".95">
+    <path fill="#1f7a45" d="M520 4 L532 4 L536 56 L524 56 Z"/>
+    <path fill="#f4f1ea" d="M536 4 L546 4 L550 56 L540 56 Z"/>
+    <path fill="#c8283a" d="M550 4 L561 4 L565 56 L554 56 Z"/>
+  </g>
+</svg>

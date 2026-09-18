@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 40">
+  <!-- Trikolore-Schwung aus dem Logo -->
+  <path d="M8 30 C60 22 110 22 150 25" stroke="#1f7a45" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M150 25 C190 22 215 16 240 26 C255 31 262 31 272 30" stroke="#f4f1ea" stroke-width="8" fill="none"/>
+  <path d="M272 30 C320 26 360 18 392 10" stroke="#c8283a" stroke-width="7" fill="none" stroke-linecap="round"/>
+</svg>
