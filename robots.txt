@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://semo428.github.io/PepeWebsite/sitemap.xml

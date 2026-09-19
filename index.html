@@ -3,32 +3,74 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>da Pepe – Pizzeria Ristorante in Sigmaringen</title>
-  <meta name="description" content="Pizzeria Ristorante da Pepe in Sigmaringen: Steinofen-Pizza, Pasta, Fleisch- und Fischgerichte. Speisekarte, Öffnungszeiten und Kontakt.">
+  <title>Pizzeria da Pepe Sigmaringen | Steinofenpizza &amp; Pasta</title>
+  <meta name="description" content="Pizzeria Ristorante da Pepe in Sigmaringen: Steinofenpizza, Pasta, Fleisch- und Fischgerichte. Speisekarte mit Preisen online. Reservierung: 07571 7494040.">
   <meta name="theme-color" content="#141312">
   <!-- DEMO: vor dem echten Start entfernen -->
   <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23141312'/><text x='50' y='70' font-size='62' text-anchor='middle' fill='%23f4f1ea' font-family='cursive'>P</text><rect x='18' y='80' width='21' height='6' fill='%231f7a45'/><rect x='39' y='80' width='22' height='6' fill='%23f4f1ea'/><rect x='61' y='80' width='21' height='6' fill='%23c8283a'/></svg>">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/favicon-96.png" type="image/png" sizes="96x96">
   <link rel="preload" href="assets/fonts/yellowtail-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/styles.css">
   <script>try { if (localStorage.getItem("dapepe-ai") === "1") document.documentElement.classList.add("ai-an"); } catch (e) {}</script>
+  <!-- BUILD:meta -->
+  <link rel="canonical" href="https://semo428.github.io/PepeWebsite/">
+  <meta property="og:type" content="restaurant">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Pizzeria Ristorante da Pepe">
+  <meta property="og:title" content="Pizzeria da Pepe Sigmaringen | Steinofenpizza &amp; Pasta">
+  <meta property="og:description" content="Pizzeria Ristorante da Pepe in Sigmaringen: Steinofenpizza, Pasta, Fleisch- und Fischgerichte. Speisekarte mit Preisen online. Reservierung: 07571 7494040.">
+  <meta property="og:url" content="https://semo428.github.io/PepeWebsite/">
+  <meta property="og:image" content="https://semo428.github.io/PepeWebsite/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <!-- /BUILD:meta -->
+  <!-- BUILD:jsonld -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Restaurant",
-    "name": "Pizzeria Ristorante da Pepe",
-    "servesCuisine": "Italienisch",
-    "telephone": "+4975717494040",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "In der Vorstadt 8",
-      "postalCode": "72488",
-      "addressLocality": "Sigmaringen",
-      "addressCountry": "DE"
-    },
-    "hasMenu": "speisekarte.html"
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": "https://semo428.github.io/PepeWebsite/#restaurant",
+  "name": "Pizzeria Ristorante da Pepe",
+  "url": "https://semo428.github.io/PepeWebsite/",
+  "image": "https://semo428.github.io/PepeWebsite/assets/og-image.png",
+  "telephone": "+49 7571 7494040",
+  "servesCuisine": [
+    "Italienisch",
+    "Pizza",
+    "Pasta"
+  ],
+  "priceRange": "€€",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "In der Vorstadt 8",
+    "postalCode": "72488",
+    "addressLocality": "Sigmaringen",
+    "addressRegion": "Baden-Württemberg",
+    "addressCountry": "DE"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "11:30",
+      "closes": "23:00"
+    }
+  ],
+  "acceptsReservations": "True",
+  "hasMenu": "https://semo428.github.io/PepeWebsite/speisekarte.html"
+}
   </script>
+  <!-- /BUILD:jsonld -->
 </head>
 <body>
 
@@ -51,11 +93,12 @@
 <main>
   <section class="hero">
     <div class="wrap">
-      <span class="logo" role="img" aria-label="Pizzeria Ristorante da Pepe">
+      <h1 class="logo">
         <span class="logo__over">Pizzeria · Ristorante</span>
         <span class="logo__name">da Pepe</span>
+        <span class="sr-only"> – italienisches Restaurant in Sigmaringen</span>
         <span class="logo__swoosh" aria-hidden="true"></span>
-      </span>
+      </h1>
       <p><span data-status class="status"></span></p>
       <p class="hero__claim">Italienische Küche in Sigmaringen</p>
       <p class="hero__sub">Pizza aus dem Steinofen, Pasta, Fleisch- und Fischgerichte – mitten in der Sigmaringer Vorstadt.</p>
@@ -72,7 +115,16 @@
         <h2 class="brush">Unsere Karte</h2>
         <p>Über 100 Gerichte – von der klassischen Margherita bis zum Rumpsteak vom Rost.</p>
       </div>
-      <div class="cards" id="kategorie-karten"><!-- per JS aus speisekarte.js --></div>
+      <div class="cards" id="kategorie-karten">
+      <!-- BUILD:kategorie-karten -->
+  <a class="card" href="speisekarte.html#pizza"><h3 class="card__title">Steinofen Pizza</h3><div class="card__meta">37 Gerichte</div><div class="card__price">ab 8,50 €</div></a>
+        <a class="card" href="speisekarte.html#spaghetti"><h3 class="card__title">Spaghetti</h3><div class="card__meta">8 Gerichte</div><div class="card__price">ab 8,50 €</div></a>
+        <a class="card" href="speisekarte.html#tagliatelle"><h3 class="card__title">Tagliatelle</h3><div class="card__meta">7 Gerichte</div><div class="card__price">ab 11,00 €</div></a>
+        <a class="card" href="speisekarte.html#alforno"><h3 class="card__title">Al Forno</h3><div class="card__meta">Mit Käse überbacken</div><div class="card__price">ab 11,50 €</div></a>
+        <a class="card" href="speisekarte.html#rind"><h3 class="card__title">Carne di Manzo</h3><div class="card__meta">Rindfleisch</div><div class="card__price">ab 22,50 €</div></a>
+        <a class="card" href="speisekarte.html#salate"><h3 class="card__title">Insalata</h3><div class="card__meta">Salate</div><div class="card__price">ab 7,50 €</div></a>
+  <!-- /BUILD:kategorie-karten -->
+      </div>
       <div class="btn-row" style="margin-top:32px">
         <a class="btn btn--dark" href="speisekarte.html">Ganze Speisekarte ansehen</a>
       </div>
@@ -106,7 +158,11 @@
         <div class="info-box">
           <h3>Öffnungszeiten</h3>
           <p><span data-status class="status"></span></p>
-          <table class="hours" data-oeffnungszeiten></table>
+          <table class="hours">
+          <!-- BUILD:oeffnungszeiten -->
+  <tr><td>Montag</td><td>Ruhetag</td></tr><tr><td>Dienstag – Sonntag</td><td>11:30 – 23:00</td></tr>
+  <!-- /BUILD:oeffnungszeiten -->
+          </table>
           <!-- TODO: Öffnungszeiten vom Restaurant bestätigen lassen -->
         </div>
         <div class="info-box">
@@ -142,22 +198,5 @@
 
 <script src="assets/speisekarte.js"></script>
 <script src="assets/app.js" defer></script>
-<script>
-  (function () {
-    var data = window.SPEISEKARTE;
-    var euro = function (n) { return n.toFixed(2).replace(".", ",") + " €"; };
-
-    // Kategorie-Karten mit "ab"-Preis
-    var hervorheben = ["pizza", "spaghetti", "tagliatelle", "alforno", "rind", "salate"];
-    document.getElementById("kategorie-karten").innerHTML = hervorheben.map(function (id) {
-      var k = data.kategorien.find(function (c) { return c.id === id; });
-      var preise = k.gerichte.map(function (g) { return g.preis; }).filter(function (p) { return p != null; });
-      return '<a class="card" href="speisekarte.html#' + k.id + '">' +
-        '<h3 class="card__title">' + k.titel + '</h3>' +
-        '<div class="card__meta">' + (k.untertitel && k.untertitel.length < 30 ? k.untertitel : k.gerichte.length + " Gerichte") + '</div>' +
-        '<div class="card__price">ab ' + euro(Math.min.apply(null, preise)) + '</div></a>';
-    }).join("");
-  })();
-</script>
 </body>
 </html>

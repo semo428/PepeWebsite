@@ -1,0 +1,36 @@
+# Schreibt die Speisekarte automatisch fest ins HTML, sobald assets/speisekarte.js
+# (oder das Build-Skript) geändert und gepusht wird.
+name: Speisekarte bauen
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/speisekarte.js"
+      - "tools/build.mjs"
+      - "index.html"
+      - "speisekarte.html"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/build.mjs
+      - name: Änderungen committen (falls vorhanden)
+        run: |
+          if git diff --quiet; then
+            echo "Alles aktuell."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "Speisekarte automatisch neu gebaut"
+            git push
+          fi

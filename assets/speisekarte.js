@@ -24,6 +24,9 @@ window.SPEISEKARTE = {
     ort: "72488 Sigmaringen",
     telefon: "07571 7494040",
     telefonLink: "+4975717494040",
+    // TODO: beim Umzug auf die eigene Domain ändern (mit "/" am Ende), dann "node tools/build.mjs"
+    website: "https://semo428.github.io/PepeWebsite/",
+    preisspanne: "€€",
     // TODO: Öffnungszeiten vom Restaurant bestätigen lassen (Quelle: Restaurant Guru)
     // tage: 0 = Sonntag, 1 = Montag … 6 = Samstag. zeiten leer = Ruhetag.
     // Mehrere Zeitfenster möglich, z.B. [["11:30","14:00"],["17:30","22:00"]]
